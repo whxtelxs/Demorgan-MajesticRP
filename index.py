@@ -1,11 +1,19 @@
 import time
 import os
+from plyer import notification
 
 def countdown(seconds):
     for i in range(seconds, 0, -1):
         os.system('cls' if os.name == 'nt' else 'clear')
         print(f"Осталось {i} секунды...")
         time.sleep(1)
+
+    notification.notify(
+        title='Demorgan MajesticRP',
+        message=f'Время вышло, задание можно завершить.',
+        app_icon=None,
+    )
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def main_menu():
     while True:
