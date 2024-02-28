@@ -1,21 +1,23 @@
 import time
+import ctypes
 import os
-from plyer import notification
 
+# Функция для отправки уведомления
+def send_notification(title, message):
+    ctypes.windll.user32.MessageBoxW(0, message, title, 0x1000)
+
+# Функция для обратного отсчета
 def countdown(seconds):
-    for i in range(seconds, 0, -1):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print(f"Осталось {i} секунды...")
+    while seconds:
+        mins, secs = divmod(seconds, 60)
+        timer = '{:02d}:{:02d}'.format(mins, secs)
+        print(timer, end="\r")
         time.sleep(1)
+        seconds -= 1
+    send_notification("Demorgan MajesticRP", "Время вышло, задание можно завершить.")
 
-    notification.notify(
-        title='Demorgan MajesticRP',
-        message=f'Время вышло, задание можно завершить.',
-        app_icon=None,
-    )
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-def main_menu():
+# Основной цикл программы
+def main():
     while True:
         print("Demorgan MajesticRP by lis")
         print("Выберите опцию:")
@@ -23,24 +25,22 @@ def main_menu():
         print("2. Мыть полы 🧼")
         print("3. Собирать мусор 🧹")
         print("0. Выход")
+        choice = input("Выберите пункт меню: ")
 
-        choice = input("Ваш выбор: ")
-
-        try:
-            choice = int(choice)
-            if choice == 1:
-                countdown(35)
-            elif choice == 2:
-                countdown(55)
-            elif choice == 3:
-                countdown(75)
-            elif choice == 0:
-                print("Программа завершена.")
-                break
-            else:
-                os.system('cls' if os.name == 'nt' else 'clear')
-        except ValueError as e:
+        if choice == '1':
             os.system('cls' if os.name == 'nt' else 'clear')
+            countdown(35)
+        elif choice == '2':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            countdown(55)
+        elif choice == '3':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            countdown(75)
+        elif choice == '4':
+            break
+        else:
+            print("Неверный пункт меню. Попробуйте еще раз.")
+        os.system('cls' if os.name == 'nt' else 'clear')
 
 if __name__ == "__main__":
-    main_menu()
+    main()
